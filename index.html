@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="reliquary">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>CRYPTWAX · bone & tallow · reliquary craft</title>
+  <!-- Typography: funerary serif + ossuary sans with candle-light grace -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Special+Elite&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root[data-theme="reliquary"] {
+      --bg: #110e10;
+      --surface: #1d181c;
+      --surface-elevated: #2d2429;
+      --text: #f0e6dc;
+      --text-soft: #c6b5a8;
+      --text-muted: #6b5a51;
+      --accent: #d4a373;
+      --accent-glow: #e8bd91;
+      --accent-deep: #b47c4e;
+      --accent-subtle: #3a2e28;
+      --border-light: #4d3d34;
+      --shadow-sm: 0 12px 28px -10px rgba(0,0,0,0.7);
+      --shadow-lg: 0 25px 45px -12px rgba(0,0,0,0.85);
+      --transition: 0.3s ease;
+      --radius-card: 4px 24px 4px 24px;
+      --grid-gap: 1.8rem;
+    }
+
+    :root[data-theme="ossuary"] {
+      --bg: #f4efe9;
+      --surface: #ffffff;
+      --surface-elevated: #fefaf5;
+      --text: #2f2a26;
+      --text-soft: #7a6a5c;
+      --text-muted: #cfc2b6;
+      --accent: #c89165;
+      --accent-glow: #deaa7e;
+      --accent-deep: #a56e46;
+      --accent-subtle: #e6ddd2;
+      --border-light: #e0d4c8;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      scroll-behavior: smooth;
+      font-weight: 400;
+      line-height: 1.45;
+    }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--surface); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 0px; }
+
+    /* header — reliquary threshold */
+    .cryptwax-header {
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      background: rgba(17, 14, 16, 0.95);
+      backdrop-filter: blur(14px);
+      border-bottom: 2px solid var(--accent);
+      transition: var(--transition);
+    }
+    [data-theme="ossuary"] .cryptwax-header {
+      background: rgba(244, 239, 233, 0.96);
+      border-bottom-color: var(--accent);
+    }
+
+    .nav-crypt {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0.9rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    .brand-crypt {
+      font-family: 'Special Elite', cursive;
+      font-size: 1.6rem;
+      font-weight: 400;
+      letter-spacing: 1px;
+      color: var(--accent-glow);
+      text-transform: uppercase;
+      border-left: 4px solid var(--accent);
+      padding-left: 14px;
+    }
+    .brand-crypt small {
+      font-size: 0.55rem;
+      font-weight: 400;
+      letter-spacing: 3px;
+      margin-left: 8px;
+      color: var(--text-soft);
+    }
+
+    .nav-crypt-links {
+      display: flex;
+      gap: 2rem;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 2.5px;
+    }
+    .nav-crypt-links a {
+      color: var(--text-soft);
+      text-decoration: none;
+      transition: 0.2s;
+    }
+    .nav-crypt-links a:hover { color: var(--accent-glow); border-bottom: 1px solid; padding-bottom: 2px; }
+
+    .crypt-utils {
+      display: flex;
+      gap: 1.4rem;
+      align-items: center;
+    }
+    #themeToggleCrypt {
+      background: var(--accent-subtle);
+      border: none;
+      padding: 5px 12px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--text);
+      font-family: monospace;
+    }
+    .crypt-cart {
+      position: relative;
+      cursor: pointer;
+      font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+    }
+    .cart-count-crypt {
+      background: var(--accent);
+      color: #110e10;
+      font-size: 0.55rem;
+      font-weight: 800;
+      border-radius: 0px;
+      width: 18px;
+      height: 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: -8px;
+      right: -14px;
+    }
+
+    /* hero — candle-lit crypt */
+    .hero-candle {
+      min-height: 92vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2070&auto=format&fit=crop');
+      background-size: cover;
+      background-position: 50% 35%;
+    }
+    .hero-candle::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(115deg, #110e10cc 0%, #1d181cbb 100%);
+      z-index: 1;
+    }
+    .hero-crypt-content {
+      position: relative;
+      z-index: 2;
+      max-width: 660px;
+      padding: 0 6%;
+    }
+    .hero-crypt-badge {
+      font-size: 0.6rem;
+      letter-spacing: 5px;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--accent-glow);
+      border-left: 4px solid var(--accent);
+      padding-left: 14px;
+      font-family: monospace;
+    }
+    .hero-crypt-title {
+      font-family: 'Special Elite', cursive;
+      font-size: clamp(3.5rem, 10vw, 6rem);
+      font-weight: 400;
+      line-height: 1.0;
+      margin-bottom: 0.8rem;
+      color: #f2e6da;
+      letter-spacing: -1px;
+    }
+    .hero-crypt-offer {
+      font-size: 0.7rem;
+      font-weight: 500;
+      margin-bottom: 2rem;
+      background: rgba(0,0,0,0.6);
+      display: inline-block;
+      padding: 0.45rem 1.2rem;
+      backdrop-filter: blur(4px);
+      font-family: monospace;
+    }
+
+    .btn-crypt {
+      background: var(--accent);
+      border: none;
+      padding: 0.85rem 2.2rem;
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-block;
+      text-decoration: none;
+      color: #110e10;
+      font-family: monospace;
+    }
+    .btn-crypt:hover {
+      background: var(--accent-glow);
+      transform: translateX(4px);
+    }
+
+    /* collection header */
+    .crypt-collection {
+      max-width: 1440px;
+      margin: 3rem auto 0.5rem auto;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 0.7rem;
+    }
+    .crypt-collection h2 {
+      font-family: 'Special Elite', cursive;
+      font-size: 1.5rem;
+      font-weight: 400;
+    }
+    .crypt-collection p {
+      color: var(--accent-glow);
+      font-size: 0.6rem;
+      letter-spacing: 2px;
+      font-family: monospace;
+    }
+
+    /* product grid — ossuary relic */
+    .grid-crypt {
+      max-width: 1440px;
+      margin: 2rem auto 5rem auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: var(--grid-gap);
+    }
+
+    .crypt-card {
+      background: var(--surface);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      transition: var(--transition);
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow-sm);
+    }
+    .crypt-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--accent-glow);
+      box-shadow: var(--shadow-lg);
+    }
+    .crypt-media {
+      position: relative;
+      aspect-ratio: 4 / 5;
+      overflow: hidden;
+      background: var(--surface-elevated);
+      filter: grayscale(15%);
+    }
+    .crypt-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .crypt-card:hover .crypt-media img { transform: scale(1.03); filter: grayscale(0%); }
+    .crypt-quick {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(29, 24, 28, 0.94);
+      backdrop-filter: blur(8px);
+      padding: 0.8rem;
+      opacity: 0;
+      transition: 0.2s;
+      text-align: center;
+    }
+    .crypt-card:hover .crypt-quick { opacity: 1; }
+    .crypt-quick button {
+      background: var(--accent);
+      border: none;
+      width: 90%;
+      padding: 0.6rem;
+      font-size: 0.55rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: 0.2s;
+      color: #111;
+      font-family: monospace;
+    }
+    .crypt-quick button:hover { background: white; color: #1d181c; }
+
+    .crypt-info {
+      padding: 1rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .crypt-detail h4 {
+      font-size: 0.5rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--accent-glow);
+      letter-spacing: 2px;
+    }
+    .crypt-detail h3 {
+      font-family: 'Special Elite', cursive;
+      font-size: 1rem;
+      font-weight: 400;
+      margin-top: 5px;
+    }
+    .crypt-price { text-align: right; }
+    .crypt-current { font-weight: 800; font-size: 1rem; }
+    .crypt-old { font-size: 0.65rem; text-decoration: line-through; color: var(--text-muted); margin-left: 0.3rem; }
+
+    /* cart — reliquary satchel */
+    .cart-overlay-crypt {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: rgba(0, 0, 0, 0.97);
+      backdrop-filter: blur(20px);
+      visibility: hidden;
+      opacity: 0;
+      transition: 0.2s;
+    }
+    .cart-overlay-crypt.active { visibility: visible; opacity: 1; }
+    .cart-crypt-panel {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 100%;
+      max-width: 520px;
+      height: 100vh;
+      background: var(--surface);
+      border-left: 4px solid var(--accent);
+      box-shadow: var(--shadow-lg);
+      z-index: 2001;
+      transform: translateX(100%);
+      transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      display: flex;
+      flex-direction: column;
+    }
+    .cart-overlay-crypt.active .cart-crypt-panel { transform: translateX(0); }
+    .cart-crypt-header {
+      padding: 1.4rem;
+      border-bottom: 1px solid var(--accent);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .cart-crypt-header h3 {
+      font-family: 'Special Elite', cursive;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--accent-glow);
+    }
+    .close-crypt-cart {
+      background: none;
+      border: none;
+      font-size: 1.3rem;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+    .cart-crypt-items {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .crypt-cart-item {
+      display: flex;
+      gap: 1rem;
+      padding: 0.8rem;
+      background: var(--surface-elevated);
+      border-left: 3px solid var(--accent);
+      position: relative;
+      border-radius: 12px;
+    }
+    .crypt-cart-img {
+      width: 70px;
+      height: 85px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .crypt-cart-details { flex: 1; }
+    .crypt-cart-name {
+      font-family: 'Special Elite', cursive;
+      font-size: 0.9rem;
+      font-weight: 400;
+    }
+    .crypt-cart-price { font-size: 0.75rem; color: var(--accent-glow); margin-top: 4px; }
+    .crypt-cart-qty {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .crypt-qty-btn {
+      background: var(--accent-subtle);
+      border: none;
+      width: 26px;
+      height: 26px;
+      cursor: pointer;
+      font-weight: 800;
+      color: var(--text);
+      font-family: monospace;
+    }
+    .crypt-qty-btn:hover { background: var(--accent); color: #111; }
+    .crypt-remove {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+    .cart-crypt-footer {
+      padding: 1.5rem;
+      border-top: 2px solid var(--accent);
+      background: var(--surface);
+    }
+    .crypt-total {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 800;
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      font-family: monospace;
+    }
+    .crypt-checkout {
+      width: 100%;
+      background: var(--accent);
+      border: none;
+      padding: 0.9rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      cursor: pointer;
+      transition: 0.2s;
+      color: #110e10;
+      font-family: monospace;
+    }
+    .crypt-checkout:hover { background: var(--accent-glow); transform: scale(0.98);}
+    .empty-crypt-cart { text-align: center; color: var(--text-soft); padding: 2rem; font-size: 0.75rem; font-family: monospace;}
+
+    footer {
+      background: var(--surface-elevated);
+      margin-top: 2rem;
+      padding: 2rem 1.5rem;
+      border-top: 1px solid var(--accent);
+    }
+    .footer-crypt {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .footer-crypt-brand {
+      font-family: 'Special Elite', cursive;
+      font-size: 1.8rem;
+      font-weight: 400;
+      color: var(--accent-glow);
+    }
+    .footer-crypt-regions {
+      font-size: 0.5rem;
+      letter-spacing: 3px;
+      color: var(--text-soft);
+      margin: 0.6rem 0 1rem;
+      font-family: monospace;
+    }
+
+    /* modal — bone circle */
+    .modal-crypt {
+      position: fixed;
+      inset: 0;
+      z-index: 2200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      background: rgba(0, 0, 0, 0.98);
+      backdrop-filter: blur(24px);
+      transition: opacity 0.25s;
+    }
+    .modal-crypt-block {
+      background: var(--surface);
+      max-width: 530px;
+      width: 100%;
+      border-top: 5px solid var(--accent);
+      padding: 2rem 2rem 2.2rem;
+      position: relative;
+      text-align: center;
+      box-shadow: 0 35px 45px rgba(0,0,0,0.9);
+    }
+    .modal-crypt-close {
+      position: absolute;
+      top: 1rem;
+      right: 1.2rem;
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+    .modal-crypt-icon {
+      width: 70px;
+      height: 70px;
+      background: rgba(212, 163, 115, 0.2);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      font-size: 2rem;
+      border: 1px solid var(--accent);
+      color: var(--accent-glow);
+    }
+    .modal-crypt-title {
+      font-family: 'Special Elite', cursive;
+      font-size: 2.4rem;
+      font-weight: 400;
+      color: var(--accent-glow);
+      margin-bottom: 0.2rem;
+    }
+    .modal-crypt-desc {
+      color: var(--text-soft);
+      line-height: 1.5;
+      font-size: 0.85rem;
+      margin: 0.8rem 0;
+    }
+    .modal-crypt-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1.6rem;
+    }
+    .btn-crypt-primary {
+      background: var(--accent);
+      border: none;
+      padding: 0.7rem 2rem;
+      font-weight: 800;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      cursor: pointer;
+      color: #110e10;
+      font-family: monospace;
+    }
+    .btn-crypt-secondary {
+      background: transparent;
+      border: 1px solid var(--accent);
+      padding: 0.7rem 1.8rem;
+      font-weight: 600;
+      font-size: 0.7rem;
+      cursor: pointer;
+      color: var(--text);
+      font-family: monospace;
+    }
+    .modal-fade-crypt { opacity: 0; pointer-events: none; transition: opacity 0.2s; display: none; }
+
+    @media (max-width: 780px) {
+      .nav-crypt { flex-direction: column; gap: 0.6rem; }
+      .grid-crypt { gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- entry modal: CRYPTWAX invitation -->
+<div id="entryModalCrypt" class="modal-crypt">
+  <div class="modal-crypt-block">
+    <button id="closeCryptModal" class="modal-crypt-close"><i class="fas fa-candle"></i></button>
+    <div class="modal-crypt-icon"><i class="fas fa-skull"></i></div>
+    <h2 class="modal-crypt-title">CRYPTWAX</h2>
+    <p class="modal-crypt-desc">Bone & tallow · reliquary craft · sepulchral artistry. Garments rendered from crypt-light and ossuary hands. Enter the reliquary.</p>
+    <div class="modal-crypt-buttons">
+      <button id="enterCryptBtn" class="btn-crypt-primary">LIGHT THE CANDLE</button>
+      <button id="laterCryptBtn" class="btn-crypt-secondary">WANDER LATER</button>
+    </div>
+  </div>
+</div>
+
+<header class="cryptwax-header">
+  <div class="nav-crypt">
+    <div class="brand-crypt">CRYPTWAX<small>· RELIQUARY</small></div>
+    <nav class="nav-crypt-links">
+      <a href="#shopCrypt">OSSUARY</a>
+      <a href="#shopCrypt">TALLOW</a>
+      <a href="#shopCrypt">BONE</a>
+      <a href="#">CRYPT</a>
+    </nav>
+    <div class="crypt-utils">
+      <button id="themeToggleCrypt">🕯️ OSSUARY MODE</button>
+      <div class="crypt-cart" id="cartIconCrypt">
+        <i class="fas fa-candle"></i>
+        <span class="cart-count-crypt" id="cartCountCrypt">0</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero-candle">
+    <div class="hero-crypt-content">
+      <div class="hero-crypt-badge">RELQUARY · BONE-WOVEN · SEPULCHRAL</div>
+      <h1 class="hero-crypt-title">CRYPTWAX</h1>
+      <div class="hero-crypt-offer">First anointing: <strong>15% off</strong> your first reliquary artifact</div>
+      <a href="#shopCrypt" class="btn-crypt">ENTER OSSUARY →</a>
+    </div>
+  </section>
+
+  <div class="crypt-collection" id="shopCrypt">
+    <h2>Reliquary Archive · Bone & Tallow</h2>
+    <p>12 sepulchral artifacts</p>
+  </div>
+
+  <div class="grid-crypt" id="productGridCrypt"></div>
+</main>
+
+<footer>
+  <div class="footer-crypt">
+    <div class="footer-crypt-brand">CRYPTWAX</div>
+    <div class="footer-crypt-regions">CATACOMBS · OSSUARY · CRYPT OF LIGHTS</div>
+    <p style="font-size:0.55rem; opacity:0.7;">© 2026 CRYPTWAX — rendered from wax, carried by keepers.</p>
+  </div>
+</footer>
+
+<!-- CART SIDEBAR -->
+<div id="cartOverlayCrypt" class="cart-overlay-crypt">
+  <div class="cart-crypt-panel">
+    <div class="cart-crypt-header">
+      <h3>🕯️ CRYPT FOLIO</h3>
+      <button class="close-crypt-cart" id="closeCartCrypt"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="cart-crypt-items" id="cartItemsCrypt">
+      <div class="empty-crypt-cart">Your pack is empty.<br>Add reliquary gear.</div>
+    </div>
+    <div class="cart-crypt-footer" id="cartFooterCrypt" style="display: none;">
+      <div class="crypt-total"><span>Total (USD)</span><span id="cartTotalCrypt">$0</span></div>
+      <button class="crypt-checkout" id="checkoutCryptBtn">🕰️ CONSECRATE ORDER</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // CRYPTWAX collection — ossuary artifacts
+  const cryptProducts = [
+    { id: 1301, name: "Reliquary Cloak", category: "OUTER", original: 890, price: 756, img: "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=687&auto=format&fit=crop", alt: "cloak" },
+    { id: 1302, name: "Tallow Tunic", category: "TOPS", original: 325, price: 276, img: "https://images.unsplash.com/photo-1596755389378-c31d21fd1273?q=80&w=687&auto=format&fit=crop", alt: "tunic" },
+    { id: 1303, name: "Boneweave Shirt", category: "LAYER", original: 560, price: 476, img: "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?q=80&w=715&auto=format&fit=crop", alt: "shirt" },
+    { id: 1304, name: "Ossuary Pants", category: "BOTTOMS", original: 450, price: 382, img: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=600&auto=format&fit=crop", alt: "pants" },
+    { id: 1305, name: "Candle Anorak", category: "KNIT", original: 770, price: 654, img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?q=80&w=600&auto=format&fit=crop", alt: "anorak" },
+    { id: 1306, name: "Sepulcher Vest", category: "VEST", original: 400, price: 340, img: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?q=80&w=687&auto=format&fit=crop", alt: "vest" },
+    { id: 1307, name: "Mortuary Smock", category: "SMOCK", original: 1020, price: 867, img: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?q=80&w=687&auto=format&fit=crop", alt: "smock" },
+    { id: 1308, name: "Charnel Coat", category: "COAT", original: 1350, price: 1147, img: "https://images.unsplash.com/photo-1598032895397-b9472444bf93?q=80&w=2070&auto=format&fit=crop", alt: "coat" },
+    { id: 1309, name: "Votive Cargo", category: "BOTTOMS", original: 520, price: 442, img: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=600&auto=format&fit=crop", alt: "cargo" },
+    { id: 1310, name: "Wax Hood", category: "HOODIE", original: 320, price: 272, img: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?q=80&w=764&auto=format&fit=crop", alt: "hoodie" },
+    { id: 1311, name: "Grave Duster", category: "OUTER", original: 1750, price: 1487, img: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?q=80&w=688&auto=format&fit=crop", alt: "duster" },
+    { id: 1312, name: "Crypt Shacket", category: "SHIRT", original: 620, price: 527, img: "https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?q=80&w=687&auto=format&fit=crop", alt: "shacket" }
+  ];
+
+  let cartCrypt = [];
+
+  const cartOverlayCryptDiv = document.getElementById('cartOverlayCrypt');
+  const cartCryptIcon = document.getElementById('cartIconCrypt');
+  const closeCartCryptBtn = document.getElementById('closeCartCrypt');
+  const cartCryptContainer = document.getElementById('cartItemsCrypt');
+  const cartCryptFooter = document.getElementById('cartFooterCrypt');
+  const cartCryptTotalSpan = document.getElementById('cartTotalCrypt');
+  const cartCryptCountSpan = document.getElementById('cartCountCrypt');
+
+  function persistCryptCart() { localStorage.setItem('CRYPTWAX_CART', JSON.stringify(cartCrypt)); }
+  function loadCryptCart() {
+    const saved = localStorage.getItem('CRYPTWAX_CART');
+    if (saved) cartCrypt = JSON.parse(saved);
+    renderCryptCart();
+    updateCryptCount();
+  }
+  function updateCryptCount() { cartCryptCountSpan.innerText = cartCrypt.reduce((sum,i)=>sum+i.qty,0); }
+
+  function renderCryptCart() {
+    if (!cartCryptContainer) return;
+    if (cartCrypt.length === 0) {
+      cartCryptContainer.innerHTML = '<div class="empty-crypt-cart">Your pack is empty.<br>Add reliquary gear.</div>';
+      cartCryptFooter.style.display = 'none';
+      updateCryptCount(); persistCryptCart(); return;
+    }
+    cartCryptFooter.style.display = 'block';
+    let html = ''; let total = 0;
+    cartCrypt.forEach(item => {
+      total += item.price * item.qty;
+      html += `<div class="crypt-cart-item" data-id="${item.id}">
+          <img class="crypt-cart-img" src="${item.img}" alt="${item.name}">
+          <div class="crypt-cart-details">
+            <div class="crypt-cart-name">${item.name}</div>
+            <div class="crypt-cart-price">$${item.price.toLocaleString()}</div>
+            <div class="crypt-cart-qty">
+              <button class="crypt-qty-dec" data-id="${item.id}">−</button>
+              <span>${item.qty}</span>
+              <button class="crypt-qty-inc" data-id="${item.id}">+</button>
+            </div>
+          </div>
+          <button class="crypt-remove" data-id="${item.id}"><i class="fas fa-trash-alt"></i></button>
+        </div>`;
+    });
+    cartCryptContainer.innerHTML = html;
+    cartCryptTotalSpan.innerText = `$${total.toLocaleString()}`;
+    document.querySelectorAll('.crypt-qty-dec').forEach(btn => btn.addEventListener('click', () => updateCryptQty(parseInt(btn.dataset.id), -1)));
+    document.querySelectorAll('.crypt-qty-inc').forEach(btn => btn.addEventListener('click', () => updateCryptQty(parseInt(btn.dataset.id), 1)));
+    document.querySelectorAll('.crypt-remove').forEach(btn => btn.addEventListener('click', () => removeCryptItem(parseInt(btn.dataset.id))));
+    updateCryptCount(); persistCryptCart();
+  }
+  function updateCryptQty(pid, delta) {
+    const idx = cartCrypt.findIndex(i=>i.id===pid);
+    if(idx !== -1){
+      const nq = cartCrypt[idx].qty + delta;
+      if(nq <= 0) cartCrypt.splice(idx,1);
+      else cartCrypt[idx].qty = nq;
+      renderCryptCart();
+    }
+  }
+  function removeCryptItem(pid){ cartCrypt = cartCrypt.filter(i=>i.id!==pid); renderCryptCart(); }
+  function addToCryptCart(pid){
+    const prod = cryptProducts.find(p=>p.id===pid);
+    if(!prod) return;
+    const existing = cartCrypt.find(i=>i.id===pid);
+    if(existing) existing.qty += 1;
+    else cartCrypt.push({id:prod.id, name:prod.name, price:prod.price, qty:1, img:prod.img});
+    renderCryptCart();
+    const btn = document.querySelector(`.crypt-add-${pid}`);
+    if(btn){ let old = btn.innerText; btn.innerText="✓ ADDED"; setTimeout(()=>btn.innerText=old,700); }
+    cartOverlayCryptDiv.classList.add('active');
+  }
+
+  function renderCryptProducts() {
+    const container = document.getElementById('productGridCrypt');
+    if(!container) return;
+    container.innerHTML = '';
+    cryptProducts.forEach(p => {
+      const disc = Math.round(((p.original-p.price)/p.original)*100);
+      const card = document.createElement('div');
+      card.className = 'crypt-card';
+      card.innerHTML = `
+        <div class="crypt-media">
+          <img src="${p.img}" alt="${p.alt||p.name}" loading="lazy">
+          <div class="crypt-quick"><button class="crypt-add-${p.id} add-crypt-btn" data-id="${p.id}">🕯️ ADD TO PACK</button></div>
+        </div>
+        <div class="crypt-info">
+          <div class="crypt-detail"><h4>${p.category}</h4><h3>${p.name}</h3></div>
+          <div class="crypt-price"><span class="crypt-current">$${p.price.toLocaleString()}</span><span class="crypt-old">$${p.original.toLocaleString()}</span><span style="font-size:0.55rem;color:var(--accent-glow);display:block;text-align:right;">-${disc}%</span></div>
+        </div>`;
+      container.appendChild(card);
+    });
+    document.querySelectorAll('.add-crypt-btn').forEach(btn => btn.addEventListener('click', (e)=>{ e.preventDefault(); addToCryptCart(parseInt(btn.dataset.id)); }));
+  }
+
+  function initThemeCrypt() {
+    const stored = localStorage.getItem('CRYPTWAX-theme');
+    let theme = stored || 'reliquary';
+    document.documentElement.setAttribute('data-theme', theme);
+    const toggle = document.getElementById('themeToggleCrypt');
+    if(toggle) toggle.textContent = theme === 'reliquary' ? '🕯️ OSSUARY MODE' : '🪦 RELIQUARY MODE';
+  }
+  function toggleThemeCrypt() {
+    const curr = document.documentElement.getAttribute('data-theme');
+    const next = curr === 'reliquary' ? 'ossuary' : 'reliquary';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('CRYPTWAX-theme', next);
+    const toggleBtn = document.getElementById('themeToggleCrypt');
+    if(toggleBtn) toggleBtn.textContent = next === 'reliquary' ? '🕯️ OSSUARY MODE' : '🪦 RELIQUARY MODE';
+  }
+
+  // modal handlers
+  const modalCryptElem = document.getElementById('entryModalCrypt');
+  const enterCrypt = document.getElementById('enterCryptBtn'), laterCrypt = document.getElementById('laterCryptBtn'), closeCryptModalBtn = document.getElementById('closeCryptModal');
+  function closeCryptModalFunc() {
+    if(modalCryptElem){
+      modalCryptElem.classList.add('modal-fade-crypt');
+      setTimeout(()=>modalCryptElem.style.display='none',200);
+    }
+  }
+  if(enterCrypt) enterCrypt.addEventListener('click', closeCryptModalFunc);
+  if(laterCrypt) laterCrypt.addEventListener('click', closeCryptModalFunc);
+  if(closeCryptModalBtn) closeCryptModalBtn.addEventListener('click', closeCryptModalFunc);
+  if(modalCryptElem) modalCryptElem.addEventListener('click',(e)=>{ if(e.target===modalCryptElem) closeCryptModalFunc(); });
+
+  cartCryptIcon?.addEventListener('click',()=>cartOverlayCryptDiv.classList.add('active'));
+  closeCartCryptBtn?.addEventListener('click',()=>cartOverlayCryptDiv.classList.remove('active'));
+  cartOverlayCryptDiv?.addEventListener('click',(e)=>{ if(e.target===cartOverlayCryptDiv) cartOverlayCryptDiv.classList.remove('active'); });
+  document.getElementById('checkoutCryptBtn')?.addEventListener('click',()=>{ alert('Cryptwax hallows your offering. Your reliquary order is sealed in wax and bone.'); cartCrypt=[]; renderCryptCart(); cartOverlayCryptDiv.classList.remove('active'); });
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{ a.addEventListener('click',function(e){ const hash=this.getAttribute('href'); if(hash==="#") return; const sec=document.querySelector(hash); if(sec){ e.preventDefault(); sec.scrollIntoView({behavior:'smooth'}); } }); });
+
+  renderCryptProducts();
+  initThemeCrypt();
+  loadCryptCart();
+  document.getElementById('themeToggleCrypt')?.addEventListener('click', toggleThemeCrypt);
+</script>
+</body>
+</html>
